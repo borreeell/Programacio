@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\ProvaSFML\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{80D5A6B6-A65A-4429-8C64-454B764A6CC7}|ProvaSFML.vcxproj|D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\ProvaSFML\\ProvaSFML.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{80D5A6B6-A65A-4429-8C64-454B764A6CC7}|ProvaSFML.vcxproj|solutionrelative:ProvaSFML.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProvaSFML.cpp",
+              "DocumentMoniker": "D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\ProvaSFML\\ProvaSFML.cpp",
+              "RelativeDocumentMoniker": "ProvaSFML.cpp",
+              "ToolTip": "D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\ProvaSFML\\ProvaSFML.cpp",
+              "RelativeToolTip": "ProvaSFML.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-09-26T09:25:03.281Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+﻿  HolaMon.cpp
+D:\AluCiclesGS1\PBP\0485 - Programacio\CPP\HolaMon\HolaMon\HolaMon.cpp(426,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\AluCiclesGS1\PBP\0485 - Programacio\CPP\HolaMon\HolaMon\HolaMon.cpp(435,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  HolaMon.vcxproj -> D:\AluCiclesGS1\PBP\0485 - Programacio\CPP\HolaMon\x64\Debug\HolaMon.exe
