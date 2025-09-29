@@ -18,5 +18,8 @@
     <ClCompile Include="HolaMon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DibuixBucles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

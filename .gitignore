@@ -1,0 +1,47 @@
+# Fitxers objecte
+*.o
+*.obj
+*.lo
+*.la
+*.al
+*.gch
+
+# Fitxers binaris
+*.exe
+*.out
+*.app
+*.i
+
+# Fitxers de depuració
+*.dSYM/
+*.dmp
+*.stackdump
+*.log
+
+# Fitxers generats pel compilador
+*.ilk
+*.pdb
+*.idb
+
+# Fitxers temporals i backups
+*~
+*.swp
+*.bak
+*.tmp
+
+# Fitxers de configuració de l'IDE (opcional, segons quin IDE utilitzis)
+.vscode/
+.idea/
+*.code-workspace
+
+# Carpeta de compilació (si tens una)
+build/
+bin/
+Debug/
+Release/
+HolaMon/.vs/HolaMon/FileContentIndex/3995e897-87e9-4e0e-8f53-50c2009f24a9.vsidx
+HolaMon/.vs/HolaMon/FileContentIndex/bff2493a-e99b-471e-80c5-6a2119563e5a.vsidx
+HolaMon/.vs/HolaMon/FileContentIndex/bff2493a-e99b-471e-80c5-6a2119563e5a.vsidx
+HolaMon/.vs/HolaMon/FileContentIndex/e91f0daa-7404-419d-a931-38e3145212b4.vsidx
+HolaMon/.vs/HolaMon/FileContentIndex/eff4f33b-8c8b-4ee7-a375-ba77ee897cab.vsidx
+HolaMon/.vs/HolaMon/v17/Browse.VC.db
