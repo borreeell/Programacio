@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\HolaMon\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D97B1A3D-6031-4CED-85C9-B3EB2B0E952B}|HolaMon\\HolaMon.vcxproj|D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\HolaMon\\HolaMon\\DibuixBucles.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D97B1A3D-6031-4CED-85C9-B3EB2B0E952B}|HolaMon\\HolaMon.vcxproj|solutionrelative:HolaMon\\DibuixBucles.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D97B1A3D-6031-4CED-85C9-B3EB2B0E952B}|HolaMon\\HolaMon.vcxproj|D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\HolaMon\\HolaMon\\HolaMon.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{D97B1A3D-6031-4CED-85C9-B3EB2B0E952B}|HolaMon\\HolaMon.vcxproj|solutionrelative:HolaMon\\HolaMon.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
@@ -19,12 +23,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "DibuixBucles.cpp",
+              "DocumentMoniker": "D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\HolaMon\\HolaMon\\DibuixBucles.cpp",
+              "RelativeDocumentMoniker": "HolaMon\\DibuixBucles.cpp",
+              "ToolTip": "D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\HolaMon\\HolaMon\\DibuixBucles.cpp",
+              "RelativeToolTip": "HolaMon\\DibuixBucles.cpp",
+              "ViewState": "AgIAADwAAAAAAAAAAAAYwFIAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-09-29T06:06:59.425Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "HolaMon.cpp",
               "DocumentMoniker": "D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\HolaMon\\HolaMon\\HolaMon.cpp",
               "RelativeDocumentMoniker": "HolaMon\\HolaMon.cpp",
               "ToolTip": "D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\HolaMon\\HolaMon\\HolaMon.cpp",
               "RelativeToolTip": "HolaMon\\HolaMon.cpp",
-              "ViewState": "AgIAAKIBAAAAAAAAAAAAALgBAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAACYBAAAAAAAAAAAAAD0BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-09-19T10:11:45.893Z",
               "EditorCaption": ""
