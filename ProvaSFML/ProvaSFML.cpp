@@ -9,22 +9,29 @@ using namespace sf;
 
 int main()
 {
-    RenderWindow window(VideoMode(300, 200), "Title");
+    RenderWindow window(VideoMode(500, 500), "Title", Style::Close); // Defineix la finestra amb les propietats
     window.setFramerateLimit(60);
 
-    RectangleShape rect(Vector2f(50, 50));
-    rect.setFillColor(Color::Red);
-    rect.setOrigin(Vector2f(25, 25));
-    rect.setPosition(Vector2f(50, 50));
+    RectangleShape rect(Vector2f(50, 50)); // Creem un rectangle dins de la finestra
+    rect.setFillColor(Color::Red); // Color del rectangle
+    rect.setOrigin(Vector2f(25, 25)); // Origen de l'objecte
+    rect.setPosition(Vector2f(50, 50)); // Posicio de l'objecte
 
     while (window.isOpen()) {
-        
-        rect.rotate(1.5f);
-        rect.move(Vector2f(1, 0));
+        Event event;
 
-        window.clear(Color::Black);
-        window.draw(rect);
-        window.display();
+        // Comprova els events
+        while (window.pollEvent(event)) {
+            // Si l'event es = tancar, tanca la finestra
+            if (event.type == Event::Closed) {
+                window.close();
+            }
+        }
+
+
+        window.clear(Color::Black); // Color de fons de la finestra
+        window.draw(rect); // Dibuixem el rectangle
+        window.display(); // Renderitzem la finestra
     }
 }
 
