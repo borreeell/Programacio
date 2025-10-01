@@ -15,7 +15,7 @@ void mosaicMondrian(vector<RectangleShape>& formes, vector<RectangleShape>& lini
     linies.clear();
 
     // Variables geometriques principals
-    RectangleShape rectangleBlanc, separador, rectangleGroc, quadratBlau;
+    RectangleShape rectangleBlanc, separador, rectangleGroc, quadratBlau, quadratVermell;
 
     rectangleBlanc.setSize(Vector2f(101, 46));
     rectangleBlanc.setPosition(0, 0);
@@ -37,25 +37,45 @@ void mosaicMondrian(vector<RectangleShape>& formes, vector<RectangleShape>& lini
     separador.setFillColor(Color(59, 61, 60));
     formes.push_back(separador);
 
-    rectangleGroc.setSize(Vector2f(262, 46));
-    rectangleGroc.setPosition(450, 0);
-    rectangleGroc.setFillColor(Color::Yellow);
-    formes.push_back(rectangleGroc);
+    quadratVermell.setSize(Vector2f(262, 46));
+    quadratVermell.setPosition(450, 0);
+    quadratVermell.setFillColor(Color::Red);
+    formes.push_back(quadratVermell);
 
-    separador.setSize(Vector2f(13, 46));
+    separador.setSize(Vector2f(13, 500));
     separador.setPosition(699, 0);
     separador.setFillColor(Color(59, 61, 60));
     formes.push_back(separador);
 
-    quadratBlau.setSize(Vector2f(260, 147));
+    quadratBlau.setSize(Vector2f(260, 500));
     quadratBlau.setPosition(710, 0);
     quadratBlau.setFillColor(Color::Blue);
     formes.push_back(quadratBlau);
+
+    separador.setSize(Vector2f(13, 500));
+    separador.setPosition(940, 0);
+    separador.setFillColor(Color(59, 61, 60));
+    formes.push_back(separador);
 
     separador.setSize(Vector2f(710, 13));
     separador.setPosition(0, 46);
     separador.setFillColor(Color(59, 61, 60));
     formes.push_back(separador);
+
+    quadratVermell.setSize(Vector2f(300, 500));
+    quadratVermell.setPosition(0, 59);
+    quadratVermell.setFillColor(Color::Red);
+    formes.push_back(quadratVermell);
+
+    separador.setSize(Vector2f(13, 500));
+    separador.setPosition(300, 59);
+    separador.setFillColor(Color(59, 61, 60));
+    formes.push_back(separador);
+
+    rectangleGroc.setSize(Vector2f(385, 500));
+    rectangleGroc.setPosition(313, 59);
+    rectangleGroc.setFillColor(Color::Yellow);
+    formes.push_back(rectangleGroc);
 }
 
 int main()
@@ -72,15 +92,13 @@ int main()
     while (finestra.isOpen()) {
         Event event;
 
+        // Comprova els events
         while (finestra.pollEvent(event)) {
+            // Habilita el boto de tancar la finestra
             if (event.type == Event::Closed) {
                 finestra.close();
             }
         }
-
-
-
-        //finestra.clear(Color::Black);
         
         // Dibuixa els blocs de color
         for (auto& f : formes) finestra.draw(f);
@@ -90,14 +108,3 @@ int main()
 
     return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
