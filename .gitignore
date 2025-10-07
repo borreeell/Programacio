@@ -11,8 +11,9 @@
 *.out
 *.app
 *.i
+*.dll
 
-# Fitxers de depuració
+# Fitxers de depuracio
 *.dSYM/
 *.dmp
 *.stackdump
@@ -22,6 +23,7 @@
 *.ilk
 *.pdb
 *.idb
+*.opendb
 
 # Fitxers temporals i backups
 *~
@@ -29,19 +31,15 @@
 *.bak
 *.tmp
 
-# Fitxers de configuració de l'IDE (opcional, segons quin IDE utilitzis)
+# Fitxers de configuracio de l'IDE
 .vscode/
 .idea/
 *.code-workspace
 
-# Carpeta de compilació (si tens una)
+# Carpeta de compilacio
 build/
 bin/
 Debug/
 Release/
 *.vsidx
 *.db
-
-# Arxius DLL
-*.dll
-MosaicMondrianSFML/.vs/MosaicMondrianSFML/v17/Browse.VC.opendb

@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\MadHistory\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7C190F30-B960-430A-BA60-B3A8D9881829}|MadHistory.vcxproj|D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\MadHistory\\MadHistory.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7C190F30-B960-430A-BA60-B3A8D9881829}|MadHistory.vcxproj|solutionrelative:MadHistory.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MadHistory.cpp",
+              "DocumentMoniker": "D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\MadHistory\\MadHistory.cpp",
+              "RelativeDocumentMoniker": "MadHistory.cpp",
+              "ToolTip": "D:\\AluCiclesGS1\\PBP\\0485 - Programacio\\CPP\\MadHistory\\MadHistory.cpp",
+              "RelativeToolTip": "MadHistory.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-06T09:28:09.189Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
