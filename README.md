@@ -6,6 +6,7 @@ Aquest repositori conté les practiques de l'assignatura de **Progrmacio** de **
   1. HolaMon: Exercicis d'introduccio a la progrmacio.
   2. MosaicMondrianSFML: Crear un mosaic de l'estil Mondrian utilitzant SFML.
   3. MadHistory: Crear una historia amb variables introduides per l'usuari
+  4. Timber: Crear un joc estil timberman amb c++ i SFML
 
 ## Llicència
 
