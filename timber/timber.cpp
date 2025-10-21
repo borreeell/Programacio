@@ -21,7 +21,10 @@ const int NUM_BRANCHES = 6;
 const float timeBarStartWidth = 400;
 const float timeBarHeight = 80;
 
-enum class Side { LEFT, RIGHT, NONE };
+const float AXE_POSITION_LEFT = 700;
+const float AXE_POSITION_RIGHT = 1075;
+
+enum class side { LEFT, RIGHT, NONE };
 
 // -------------------------------------
 // Estructura NPC (Abella/Nuvols)
@@ -40,13 +43,14 @@ struct NPC {
         maxHeight(maxHeight_), maxSpeed(maxSpeed_),
         sentit(sentit_), posicioInicialX(posicioInicialX_) {
     }
-};
+}; 
 
 // -------------------------------------
 // Prototips de funcions
 // -------------------------------------
 void updateNPC(NPC&, float);
-void updateBranchSprites(Side[], Sprite[]);
+void updateBranchSprites(side[], Sprite[]);
+void updateBranches(side branchPositions[], int seed);
 
 int main()
 {
@@ -60,15 +64,38 @@ int main()
     Texture textureBackground("graphics/background.png");
     Sprite spriteBackground(textureBackground);
 
-    // Textura de l'arbre 1
+    // Textures dels arbres
     Texture textureTree1("graphics/tree.png");
+    Texture textureTree2("graphics/tree2.png");
+
     Sprite spriteTree1(textureTree1);
     spriteTree1.setPosition({ 810, 0 });
+
+    Sprite spriteTree2(textureTree2);
+    spriteTree2.setPosition({ 0, -65 });
+
+    Sprite spriteTree3(textureTree2);
+    spriteTree3.setPosition({ 1500, - 150 });
 
     // Textura del jugador
     Texture texturePlayer("graphics/player.png");
     Sprite spritePlayer(texturePlayer);
     spritePlayer.setPosition({ 580, 720 });
+
+    // Textura de la lapida
+    Texture textureRip("graphics/rip.png");
+    Sprite spriteRip(textureRip);
+    spriteRip.setPosition({ 600, 860 });
+
+    // Textura de la destral
+    Texture textureAxe("graphics/axe.png");
+    Sprite spriteAxe(textureAxe);
+    spriteAxe.setPosition({ 700, 830 });
+
+    // Tronc volador
+    Texture textureLog("graphics/log.png");
+    Sprite spriteLog(textureLog);
+    spriteLog.setPosition({ 810, 720 });
 
     // -------------------------------------
     // Entitats mobils (Abella + Nuvols)
@@ -107,10 +134,18 @@ int main()
     // -------------------------------------
     Clock clock;
 
-    bool paused = true;
     int score = 0;
+
     float timeRemaining = 6.0f;
     float timeBarWidthPerSecond = timeBarStartWidth / timeRemaining;
+    float logSpeedX = 1000;
+    float logSpeedY = -1500;
+
+    bool paused = true;
+    bool acceptInput = false;
+    bool logActive = false;
+
+    side playerSide = side::LEFT;
 
     RectangleShape timeBar(Vector2f(timeBarStartWidth, timeBarHeight));
 
@@ -121,7 +156,7 @@ int main()
     // Configuracio branques
     // -------------------------------------
     Texture textureBranch("graphics/branch.png");
-    Side branchPositions[NUM_BRANCHES];
+    side branchPositions[NUM_BRANCHES];
     Sprite branches[NUM_BRANCHES] = {
         Sprite(textureBranch),Sprite(textureBranch),Sprite(textureBranch),
         Sprite(textureBranch),Sprite(textureBranch),Sprite(textureBranch)
@@ -132,7 +167,7 @@ int main()
         branches[i].setPosition({ -2000, -2000 });
 
         branches[i].setOrigin({ 220, 20 });
-        branchPositions[i] = Side::LEFT;
+        branchPositions[i] = side::LEFT;
     }
 
     // -------------------------------------
@@ -142,14 +177,75 @@ int main()
         // Gestio d'events
         while (const optional event = window.pollEvent()) {
             if (event->is<Event::Closed>()) window.close();
+
             if (const auto* key = event->getIf<Event::KeyPressed>()) {
                 if (key->scancode == Keyboard::Scancode::Escape) window.close(); // Utilitza la tecla ESC per sortir del joc
 
                 // Reiniciar el joc
                 if (key->scancode == Keyboard::Scancode::Enter) {
                     paused = false;
+
+                    // Reinicia el temps i la puntuacio
                     score = 0;
                     timeRemaining = 6;
+
+                    for (int i = 0; i < NUM_BRANCHES; i++) {
+                        branchPositions[i] = side::NONE;
+                    }
+
+                    // Assegura que la lapida esta amagada
+                    spriteRip.setPosition({ 675, 2000 });
+
+                    // Amaga el jugador
+                    spritePlayer.setPosition({ 675, 660 });
+
+                    acceptInput = true;
+                }
+
+                if (key->scancode == Keyboard::Scancode::Left) {
+                    // Assegura que el jugador esta a la dreta
+                    playerSide = side::LEFT;
+                    
+                    // Suma a la puntuacio
+                    score++;
+
+                    // Afegeix la puntuacio al temps restant
+                    timeRemaining += (2 / score) + .15;
+
+                    spriteAxe.setPosition({ AXE_POSITION_LEFT, spriteAxe.getPosition().y });
+                    spritePlayer.setPosition({ 675, 720 });
+
+                    updateBranches(branchPositions, score);
+
+                    // Posa el tronc volador a l'esquerra
+                    spriteLog.setPosition({ 810, 720 });
+                    logSpeedX = -5000;
+                    logActive = true;
+
+                    acceptInput = false;
+                }
+
+                if (key->scancode == Keyboard::Scancode::Right) {
+                    // Assegura que el jugador esta a la dreta
+                    playerSide = side::RIGHT;
+
+                    // Suma a la puntuacio
+                    score++;
+
+                    // Afegeix la puntuacio al temps restant
+                    timeRemaining += (2 / score) + .15;
+
+                    spriteAxe.setPosition({ AXE_POSITION_RIGHT, spriteAxe.getPosition().y });
+                    spritePlayer.setPosition({ 1200, 720 });
+
+                    updateBranches(branchPositions, score);
+
+                    // Posa el tronc volador a l'esquerra
+                    spriteLog.setPosition({ 810, 720 });
+                    logSpeedX = -5000;
+                    logActive = true;
+
+                    acceptInput = false;
                 }
             }
         }
@@ -165,7 +261,9 @@ int main()
 
             if (timeRemaining <= 0) {
                 paused = true;
+
                 messageText.setString("Out of time!");
+
                 textRect = messageText.getLocalBounds();
                 messageText.setOrigin({ (textRect.position.x + (textRect.size.x / 2.0f)), (textRect.position.y + (textRect.size.y / 2.0f)) });
             }
@@ -176,11 +274,37 @@ int main()
             updateNPC(clouds[2], dt.asSeconds());
             updateNPC(bee, dt.asSeconds());
 
-            updateBranchSprites(branchPositions, branches);
-
             stringstream ss;
             ss << "Score = " << score;
             scoreText.setString(ss.str());
+
+            updateBranchSprites(branchPositions, branches);
+
+            // Control del tronc volador
+            if (logActive) {
+                spriteLog.setPosition({ spriteLog.getPosition().x + (logSpeedX * dt.asSeconds()), spriteLog.getPosition().y + (logSpeedY * dt.asSeconds()) });
+                
+                if (spriteLog.getPosition().x < -100 || spriteLog.getPosition().x > 2000) {
+                    logActive = false;
+                    spriteLog.setPosition({ 810, 720 });
+                }
+            }
+
+            // Comprovar si al jugador l'ha tocat una branca
+            if (branchPositions[5] == playerSide) {
+                // Mort
+                paused = true;
+                acceptInput = false;
+
+                // Mostra la lapida
+                spriteRip.setPosition({ 525, 760 });
+
+                // Amaga el jugador
+                spritePlayer.setPosition({ 2000, 660 });
+
+                // Canvia el text del missatge
+                messageText.setString("SQUISHED!");
+            }
         }
 
         // -------------------------------------
@@ -198,9 +322,21 @@ int main()
         }
 
         window.draw(spriteTree1);
+        window.draw(spriteTree2);
+        window.draw(spriteTree3);
+
         window.draw(spritePlayer);
+
+        window.draw(spriteAxe);
+
+        window.draw(spriteLog);
+
+        window.draw(spriteRip);
+        
         window.draw(bee.sprite);
+        
         window.draw(scoreText);
+        
         window.draw(timeBar);
 
         if (paused) window.draw(messageText);
@@ -228,15 +364,15 @@ void updateNPC(NPC& npc, float dt) {
     }
 }
 
-void updateBranchSprites(Side branchPositions[], Sprite branches[]) {
+void updateBranchSprites(side branchPositions[], Sprite branches[]) {
     for (int i = 0; i < NUM_BRANCHES; i++) {
         float height = i * 150;
 
-        if (branchPositions[i] == Side::LEFT) {
+        if (branchPositions[i] == side::LEFT) {
             branches[i].setPosition({ 610, height });
             branches[i].setRotation(degrees(180));
         }
-        else if (branchPositions[i] == Side::RIGHT) {
+        else if (branchPositions[i] == side::RIGHT) {
             branches[i].setPosition({ 1330, height });
             branches[i].setRotation(degrees(0));
         }
@@ -246,20 +382,23 @@ void updateBranchSprites(Side branchPositions[], Sprite branches[]) {
     }
 }
 
-void updateBranches(Side branchPositions[], int seed) {
-    for (int j = NUM_BRANCHES - 1; j > 0; j--)
+void updateBranches(side branchPositions[], int seed) {
+    for (int j = NUM_BRANCHES - 1; j > 0; j--) {
         branchPositions[j] = branchPositions[j - 1];
+    }
+
     srand((int)time(0) + seed);
+
     int r = rand() % 5;
     switch (r) {
-    case 0:
-        branchPositions[0] = Side::LEFT;
-        break;
-    case 1:
-        branchPositions[0] = Side::RIGHT;
-        break;
-    default:
-        branchPositions[0] = Side::NONE;
-        break;
+        case 0:
+            branchPositions[0] = side::LEFT;
+            break;
+        case 1:
+            branchPositions[0] = side::RIGHT;
+            break;
+        default:
+            branchPositions[0] = side::NONE;
+            break;
     }
 }
