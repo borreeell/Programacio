@@ -10,6 +10,15 @@
 
 using namespace std;
 
+// -------------------------------------
+// Constants
+// -------------------------------------
+
+// Constants funcioClasse1
+const int INFANTIL = 12;
+const int JOVE = 17;
+const int ADULT = 64;
+
 static void gameStats()
 {
 	int score;
@@ -428,6 +437,24 @@ static void stringsClasse2()
 	}
 }
 
+string obtenirGrup(int edat) 
+{
+	if (edat <= INFANTIL) {
+		return "Infantil";
+	}
+	else if (edat <= JOVE) {
+		return "Jove";
+	}
+	else if (edat <= ADULT) {
+		return "Adult";
+	}
+	else {
+		return "Senior";
+	}
+}
+
+
+
 int main()
 {
 	int opcio, files;
@@ -452,31 +479,33 @@ int main()
 	//bucles2();
 	//bucles3();
 
-	do {
-		cout << "\n===== MENU DIBUIXOS =====" << endl;
-		cout << "1. Triangle ple" << endl;
-		cout << "2. Escala" << endl;
-		cout << "3. Triangle buit" << endl;
-		cout << "4. Triangle sencer" << endl;
-		cout << "5. Diamant" << endl;
-		cout << "Entra una opcio (1-5): ";
-		cin >> opcio;
+	//do {
+	//	cout << "\n===== MENU DIBUIXOS =====" << endl;
+	//	cout << "1. Triangle ple" << endl;
+	//	cout << "2. Escala" << endl;
+	//	cout << "3. Triangle buit" << endl;
+	//	cout << "4. Triangle sencer" << endl;
+	//	cout << "5. Diamant" << endl;
+	//	cout << "Entra una opcio (1-5): ";
+	//	cin >> opcio;
 
-		if (opcio != 0) {
-			cout << "Entra el nombre de files: ";
-			cin >> files;
-		}
+	//	if (opcio != 0) {
+	//		cout << "Entra el nombre de files: ";
+	//		cin >> files;
+	//	}
 
-		switch (opcio) {
-			case 1: dibuixBucles1(files); break;
-			case 2: dibuixBucles2(files); break;
-			case 3: dibuixBucles3(files); break;
-			case 4: dibuixBucles4(files); break;
-			case 5: dibuixBucles5(files); break;
-			default: cout << "Opcio invalida" << endl; break;
-		}
-	} while (opcio != 0);
+	//	switch (opcio) {
+	//		case 1: dibuixBucles1(files); break;
+	//		case 2: dibuixBucles2(files); break;
+	//		case 3: dibuixBucles3(files); break;
+	//		case 4: dibuixBucles4(files); break;
+	//		case 5: dibuixBucles5(files); break;
+	//		default: cout << "Opcio invalida" << endl; break;
+	//	}
+	//} while (opcio != 0);
 
 	//stringsClasse1();
 	//stringsClasse2();
+
+
 }

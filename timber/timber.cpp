@@ -7,6 +7,9 @@
 #include <ctime>
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+
+#include "funcions.h"
 
 // Espais de noms
 using namespace std;
@@ -16,7 +19,6 @@ using namespace sf;
 // Enumeracions i constants globals
 // -------------------------------------
 const int NUM_CLOUDS = 3;
-const int NUM_BRANCHES = 6;
 
 const float timeBarStartWidth = 400;
 const float timeBarHeight = 80;
@@ -24,33 +26,7 @@ const float timeBarHeight = 80;
 const float AXE_POSITION_LEFT = 700;
 const float AXE_POSITION_RIGHT = 1075;
 
-enum class side { LEFT, RIGHT, NONE };
-
-// -------------------------------------
-// Estructura NPC (Abella/Nuvols)
-// -------------------------------------
-struct NPC {
-    Sprite sprite;
-    bool active;
-    float speed;
-    int maxHeight;
-    int maxSpeed;
-    int sentit; // 1 = dreta, -1 esquerra
-    float posicioInicialX;
-
-    NPC(Texture& texture, int maxHeight_, int maxSpeed_, int sentit_, float posicioInicialX_)
-        :sprite(texture), active(false), speed(0),
-        maxHeight(maxHeight_), maxSpeed(maxSpeed_),
-        sentit(sentit_), posicioInicialX(posicioInicialX_) {
-    }
-}; 
-
-// -------------------------------------
-// Prototips de funcions
-// -------------------------------------
-void updateNPC(NPC&, float);
-void updateBranchSprites(side[], Sprite[]);
-void updateBranches(side branchPositions[], int seed);
+const float FPS_UPDATE_INTERVAL = 5.0f; // Cada 5 segons
 
 int main()
 {
@@ -88,7 +64,7 @@ int main()
     spriteRip.setPosition({ 600, 860 });
 
     // Textura de la destral
-    Texture textureAxe("graphics/axe.png");
+    Texture textureAxe("graphics/destral.png");
     Sprite spriteAxe(textureAxe);
     spriteAxe.setPosition({ 700, 830 });
 
@@ -100,7 +76,7 @@ int main()
     // -------------------------------------
     // Entitats mobils (Abella + Nuvols)
     // -------------------------------------
-    Texture textureBee("graphics/bee.png");
+    Texture textureBee("graphics/abella.png");
     Texture textureCloud("graphics/cloud.png");
 
     NPC bee(textureBee, 500, 400, -1, 2000);
@@ -114,13 +90,17 @@ int main()
     // Textos i marcador
     // -------------------------------------
     Font font("fonts/KOMIKAP_.ttf");
+    Font font2("fonts/04B_11__.ttf");
+
     Text messageText(font);
-    FloatRect textRect = messageText.getLocalBounds();
     Text scoreText(font);
+    Text fpsText(font2);
     
     messageText.setString("Press Enter to start!");
     messageText.setCharacterSize(75);
     messageText.setFillColor(Color::White);
+    
+    FloatRect textRect = messageText.getLocalBounds();
     messageText.setOrigin({ textRect.position.x + textRect.size.x / 2.0f, textRect.position.y + textRect.size.y / 2.0f });
     messageText.setPosition({ 1920 / 2, 1080 / 2 });
 
@@ -129,17 +109,42 @@ int main()
     scoreText.setFillColor(Color::White);
     scoreText.setPosition({ 20, 20 });
 
+    fpsText.setString("0 FPS");
+    fpsText.setCharacterSize(40);
+    fpsText.setFillColor(Color::White);
+    fpsText.setPosition({ 1600, 20 });
+
+    // -------------------------------------
+    // Audio
+    // -------------------------------------
+
+    // Audio del jugador tallant
+    SoundBuffer chopBuffer("sound/chop.wav");
+    Sound chopSound(chopBuffer);
+
+    // Audio de fi del temps
+    SoundBuffer outTimeBuffer("sound/out_of_time.wav");
+    Sound outTimeSound(outTimeBuffer);
+
+    // Audio de mort
+    SoundBuffer deathBuffer("sound/death.wav");
+    Sound deathSound(deathBuffer);
+
     // -------------------------------------
     // Variables de joc
     // -------------------------------------
     Clock clock;
+    Clock fpsClock;
 
     int score = 0;
+    int fpsCounter = 0;
+    int lives = 3;
 
     float timeRemaining = 6.0f;
     float timeBarWidthPerSecond = timeBarStartWidth / timeRemaining;
     float logSpeedX = 1000;
     float logSpeedY = -1500;
+    float fpsUpdateTimer = 0.f;
 
     bool paused = true;
     bool acceptInput = false;
@@ -219,10 +224,12 @@ int main()
 
                     // Posa el tronc volador a l'esquerra
                     spriteLog.setPosition({ 810, 720 });
-                    logSpeedX = -5000;
+                    logSpeedX = 5000;
                     logActive = true;
 
                     acceptInput = false;
+
+                    chopSound.play();
                 }
 
                 if (key->scancode == Keyboard::Scancode::Right) {
@@ -240,12 +247,14 @@ int main()
 
                     updateBranches(branchPositions, score);
 
-                    // Posa el tronc volador a l'esquerra
+                    // Posa el tronc volador a la dreta
                     spriteLog.setPosition({ 810, 720 });
                     logSpeedX = -5000;
                     logActive = true;
 
                     acceptInput = false;
+
+                    chopSound.play();
                 }
             }
         }
@@ -266,6 +275,8 @@ int main()
 
                 textRect = messageText.getLocalBounds();
                 messageText.setOrigin({ (textRect.position.x + (textRect.size.x / 2.0f)), (textRect.position.y + (textRect.size.y / 2.0f)) });
+            
+                outTimeSound.play();
             }
 
             // Entitats mobils
@@ -299,11 +310,14 @@ int main()
                 // Mostra la lapida
                 spriteRip.setPosition({ 525, 760 });
 
-                // Amaga el jugador
-                spritePlayer.setPosition({ 2000, 660 });
-
                 // Canvia el text del missatge
                 messageText.setString("SQUISHED!");
+
+                textRect = messageText.getLocalBounds();
+                messageText.setOrigin({ textRect.position.x + textRect.size.x / 2.0f, textRect.position.y + textRect.size.y / 2.0f });
+
+                deathSound.play();
+                lives - 1;
             }
         }
 
@@ -325,9 +339,12 @@ int main()
         window.draw(spriteTree2);
         window.draw(spriteTree3);
 
-        window.draw(spritePlayer);
+        // Mostra el jugador nomes si no esta pausat
+        if (!paused) {
+            window.draw(spritePlayer);
 
-        window.draw(spriteAxe);
+            window.draw(spriteAxe);
+        }
 
         window.draw(spriteLog);
 
@@ -339,66 +356,32 @@ int main()
         
         window.draw(timeBar);
 
-        if (paused) window.draw(messageText);
+        window.draw(fpsText);
+
+        if (paused) {
+            window.draw(messageText);
+        }
 
         window.display();
+
+        // -------------------------------------
+        // Comptador d'FPS
+        // -------------------------------------
+        fpsCounter++; // Suma un frame
+        
+        float elapsed = fpsClock.getElapsedTime().asSeconds();
+
+        if (elapsed >= FPS_UPDATE_INTERVAL) {
+            float fps = fpsCounter / elapsed;
+
+            stringstream fpsStream;
+            fpsStream << static_cast<int>(fps) << " FPS";
+            fpsText.setString(fpsStream.str());
+
+            fpsCounter = 0;
+            fpsClock.restart();
+        }
     }
 
     return 0;
-}
-
-void updateNPC(NPC& npc, float dt) {
-    if (!npc.active) {
-        npc.speed = (rand() % npc.maxSpeed) * npc.sentit;
-        float height = static_cast<float>(rand() % npc.maxHeight);
-        npc.sprite.setPosition({ npc.posicioInicialX, height });
-        npc.active = true;
-    }
-    else {
-        npc.sprite.setPosition({
-            npc.sprite.getPosition().x + npc.speed * dt,
-            npc.sprite.getPosition().y
-        });
-        
-        if (npc.sprite.getPosition().x < -200 || npc.sprite.getPosition().x > 2000) npc.active = false;
-    }
-}
-
-void updateBranchSprites(side branchPositions[], Sprite branches[]) {
-    for (int i = 0; i < NUM_BRANCHES; i++) {
-        float height = i * 150;
-
-        if (branchPositions[i] == side::LEFT) {
-            branches[i].setPosition({ 610, height });
-            branches[i].setRotation(degrees(180));
-        }
-        else if (branchPositions[i] == side::RIGHT) {
-            branches[i].setPosition({ 1330, height });
-            branches[i].setRotation(degrees(0));
-        }
-        else {
-            branches[i].setPosition({ 3000, height });
-        }
-    }
-}
-
-void updateBranches(side branchPositions[], int seed) {
-    for (int j = NUM_BRANCHES - 1; j > 0; j--) {
-        branchPositions[j] = branchPositions[j - 1];
-    }
-
-    srand((int)time(0) + seed);
-
-    int r = rand() % 5;
-    switch (r) {
-        case 0:
-            branchPositions[0] = side::LEFT;
-            break;
-        case 1:
-            branchPositions[0] = side::RIGHT;
-            break;
-        default:
-            branchPositions[0] = side::NONE;
-            break;
-    }
 }
